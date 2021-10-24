@@ -3,6 +3,7 @@ package serviceb
 import (
 	"context"
 	"errors"
+	"log"
 )
 
 // Item item data
@@ -59,6 +60,7 @@ func NewService() *Service {
 
 // GetItem get the item with the given id.
 func (s *Service) GetItem(ctx context.Context, id string) (*Item, error) {
+	log.Println("msg", "serviceb.GetItem")
 	if id == "" {
 		return nil, errors.New("must provide a valid item id")
 	}

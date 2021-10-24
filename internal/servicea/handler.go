@@ -22,11 +22,17 @@ type ItemResponse struct {
 // NewHTTPServer is a factory to create http servers for this project.
 func NewHTTPServer(endpoints Endpoints) http.Handler {
 	router := mux.NewRouter()
+	// Add the GO kit HTTP transport middleware to our serverOptions.
+	options := []httptransport.ServerOption{
+		HTTPServerTrace(),
+	}
 	router.Methods(http.MethodGet).Path("/items/{id}").Handler(
 		httptransport.NewServer(
 			endpoints.GetItemEndpoint,
 			decodeGetItemWithIDRequest,
-			encodeGetItemWithIDResponse),
+			encodeGetItemWithIDResponse,
+			options...,
+		),
 	)
 	return router
 }

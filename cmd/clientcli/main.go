@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 )
@@ -19,7 +20,15 @@ type ServiceAItem struct {
 }
 
 func main() {
-
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+	item, err := getItem(ctx, "1")
+	if err != nil {
+		log.Println("error", err)
+		return
+	}
+	log.Println("item", item)
 }
 
 // GetItem gets item data with given id from service b.

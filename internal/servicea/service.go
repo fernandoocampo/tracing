@@ -31,6 +31,7 @@ func NewService(serviceb *ServiceBClient) *Service {
 
 // GetItem get the item with the given id.
 func (s *Service) GetItem(ctx context.Context, id string) (*Item, error) {
+	log.Println("msg", "servicea.GetItem")
 	if id == "" {
 		return nil, errors.New("must provide a valid item id")
 	}
