@@ -45,6 +45,13 @@ func getItem(ctx context.Context, id string) (*ServiceAItem, error) {
 	if err != nil {
 		return nil, err
 	}
+	newRequest.Header.Set("x-request-id", "value")
+	newRequest.Header.Set("x-b3-traceid", "value")
+	newRequest.Header.Set("x-b3-spanid", "value")
+	newRequest.Header.Set("x-b3-parentspanid", "value")
+	newRequest.Header.Set("x-b3-sampled", "value")
+	newRequest.Header.Set("x-b3-flags", "value")
+	newRequest.Header.Set("x-ot-span-context", "value")
 
 	response, err := client.Do(newRequest)
 	if err != nil {

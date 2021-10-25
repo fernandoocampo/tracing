@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/fernandoocampo/tracing/internal/tracers"
 	httptransport "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/mux"
 )
@@ -24,7 +25,7 @@ func NewHTTPServer(endpoints Endpoints) http.Handler {
 	router := mux.NewRouter()
 	// Add the GO kit HTTP transport middleware to our serverOptions.
 	options := []httptransport.ServerOption{
-		HTTPServerTrace(),
+		tracers.HTTPServerTrace(),
 	}
 	router.Methods(http.MethodGet).Path("/items/{id}").Handler(
 		httptransport.NewServer(
