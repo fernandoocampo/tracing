@@ -15,45 +15,41 @@ type Item struct {
 
 // Service service a
 type Service struct {
-	db map[string]Item
+	servicecClient *ServiceCClient
+	db             map[string]Item
 }
 
 // NewService create new service
-func NewService() *Service {
+func NewService(serviceCClient *ServiceCClient) *Service {
 	newDB := map[string]Item{
 		"1": {
 			ID:   "1",
-			Code: "one",
 			Name: "item one",
 		},
 		"2": {
 			ID:   "2",
-			Code: "two",
 			Name: "item two",
 		},
 		"3": {
 			ID:   "3",
-			Code: "three",
 			Name: "item three",
 		},
 		"4": {
 			ID:   "4",
-			Code: "four",
 			Name: "item four",
 		},
 		"5": {
 			ID:   "5",
-			Code: "five",
 			Name: "item five",
 		},
 		"6": {
 			ID:   "6",
-			Code: "six",
 			Name: "item six",
 		},
 	}
 	service := Service{
-		db: newDB,
+		servicecClient: serviceCClient,
+		db:             newDB,
 	}
 	return &service
 }
@@ -68,6 +64,15 @@ func (s *Service) GetItem(ctx context.Context, id string) (*Item, error) {
 	if !ok {
 		return nil, nil
 	}
+
+	itemCode, err := s.servicecClient.GetItemCode(ctx, id)
+	if err != nil {
+		log.Println("level", "error", "msg", "cannot get code from item", "error", err)
+		item.Code = "TBD"
+	}
+	item.Code = itemCode
+	log.Println("msg", "serviceb.GetItem", "item found", item)
+
 	return &item, nil
 }
 

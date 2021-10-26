@@ -12,7 +12,11 @@ import (
 )
 
 func main() {
-	service := serviceb.NewService()
+	serviceCClient, err := serviceb.NewServicCGRPCClient()
+	if err != nil {
+		panic(err)
+	}
+	service := serviceb.NewService(serviceCClient)
 	endpoints := serviceb.NewEndpoints(service)
 
 	errChan := make(chan error)

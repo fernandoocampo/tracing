@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = ".;items";
+
+service ItemCodeService {
+  rpc GetItemCode(ItemCodeRequest) returns (ItemCodeResponse) {}
+}
+
+message ItemCodeRequest {
+  string itemID = 1;
+}
+
+message ItemCodeResponse {
+  string code = 1;
+}

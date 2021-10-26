@@ -53,7 +53,7 @@ func (s *ServiceBClient) GetItem(ctx context.Context, id string) (*ServiceBItem,
 	if err != nil {
 		return nil, err
 	}
-	newRequest = tracers.PopulateHeaders(ctx, newRequest)
+	newRequest = tracers.PopulateOutgoingHeaders(ctx, newRequest)
 
 	response, err := s.client.Do(newRequest)
 	if err != nil {

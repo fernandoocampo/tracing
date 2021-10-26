@@ -26,6 +26,7 @@ func NewHTTPServer(endpoints Endpoints) http.Handler {
 	// Add the GO kit HTTP transport middleware to our serverOptions.
 	options := []httptransport.ServerOption{
 		tracers.HTTPServerTrace(),
+		httptransport.ServerErrorEncoder(nil),
 	}
 	router.Methods(http.MethodGet).Path("/items/{id}").Handler(
 		httptransport.NewServer(
